@@ -1,20 +1,55 @@
-# Korp ERP - Teste Técnico (Estoque e Faturamento)
+# 🛒 Sistema de Controle de Estoque e Emissão de Notas Fiscais (Korp)
 
-Este projeto foi desenvolvido como parte do teste técnico para a vaga de Desenvolvimento da Korp.
+Aplicação desenvolvida como parte do teste técnico, estruturada em **Arquitetura de Microsserviços**, integrando um microsserviço de Estoque, um de Faturamento e um Front-end moderno construído em Angular.
 
 ## 🚀 Tecnologias Utilizadas
 
-**Frontend:**
-* Angular 
-* RxJS (Uso de Observables para chamadas assíncronas sem travar a UI)
-* Ciclos de Vida: Utilização do `ngOnInit` para carregar dados iniciais de Notas e Produtos.
+- **Backend:** C#, .NET Core, Entity Framework Core, LINQ, ASP.NET Core Web API.
+- **Frontend:** Angular (Standalone Components), TypeScript, HTML5, CSS3, RxJS.
+- **Banco de Dados:** Relacional (via EF Core).
+- **Arquitetura:** Comunicação síncrona entre microsserviços via requisições HTTP (`HttpClient`).
 
-**Backend:**
-* C# / .NET 
-* Entity Framework Core (ORM para persistência física com banco de dados)
-* LINQ: Utilizado para consultas ao banco (ex: `ToListAsync()`, `FirstOrDefaultAsync()`).
+---
 
-## ⚙️ Arquitetura e Funcionalidades
-* **Microsserviços:** O sistema é dividido em dois serviços principais (Estoque e Faturamento) que se comunicam via HTTP.
-* **Resiliência:** Tratamento de falhas implementado. Caso o serviço de estoque fique indisponível, o sistema impede a impressão da nota e alerta o usuário.
-* **Funcionalidades:** Cadastro de produtos, PDV para emissão de notas fiscais com múltiplos itens, simulação de impressão com feedback visual e baixa automática de estoque.
+## ⚙️ Funcionalidades Implementadas
+
+1. **Gestão de Estoque:** Cadastro de produtos com validações estritas, listagem e remoção de itens.
+2. **PDV / Vendas:** Abertura de notas fiscais informando o cliente e os itens desejados.
+3. **Baixa Automática (Microsserviços):** Ao solicitar a impressão de uma nota, uma requisição é disparada para o microsserviço de Estoque para abater o saldo do produto correspondente em tempo real.
+4. **Resiliência e Tratamento de Erros:** Alertas amigáveis ao usuário em caso de falhas de comunicação.
+5. **Atualização Dinâmica de UI:** Uso de `ChangeDetectorRef` para garantir reatividade imediata na interface.
+
+---
+
+## 📥 Como Executar o Projeto
+
+Certifique-se de ter o **.NET SDK** e o **Node.js** instalados na sua máquina.
+
+### 1. Clonar o Repositório
+```bash
+git clone <url-do-seu-repositorio>
+cd <pasta-do-projeto>
+
+### 2. Rodar o Microsserviço de Estoque
+```bash
+cd EstoqueService
+dotnet ef database update
+dotnet run --urls="http://localhost:5211"
+
+
+### 3. Rodar o Microsserviço de Faturamento
+```bash
+cd FaturamentoService
+dotnet ef database update
+dotnet run --urls="http://localhost:5205"
+
+### 4. Rodar o Frontend (Angular)
+```bash
+cd frontend
+npm install
+ng serve
+
+### Acesse a aplicação no navegador em:
+```bash
+http://localhost:4200
+
