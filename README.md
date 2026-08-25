@@ -26,30 +26,32 @@ Aplicação desenvolvida como parte do teste técnico, estruturada em **Arquitet
 Certifique-se de ter o **.NET SDK** e o **Node.js** instalados na sua máquina.
 
 ### 1. Clonar o Repositório
-```bash
-git clone <url-do-seu-repositorio>
-cd <pasta-do-projeto>
+
+    git clone <url-do-seu-repositorio>
+    cd <pasta-do-projeto>
 
 ### 2. Rodar o Microsserviço de Estoque
-```bash
-cd EstoqueService
-dotnet ef database update
-dotnet run --urls="http://localhost:5211"
+Abra um terminal na pasta do serviço de estoque:
 
+    cd EstoqueService
+    dotnet ef database update
+    dotnet run --urls="http://localhost:5211"
 
 ### 3. Rodar o Microsserviço de Faturamento
-```bash
-cd FaturamentoService
-dotnet ef database update
-dotnet run --urls="http://localhost:5205"
+Abra um segundo terminal na pasta do serviço de faturamento:
+
+    cd FaturamentoService
+    dotnet ef database update
+    dotnet run --urls="http://localhost:5205"
 
 ### 4. Rodar o Frontend (Angular)
-```bash
-cd frontend
-npm install
-ng serve
+Abra um terceiro terminal na pasta do frontend:
 
-### Acesse a aplicação no navegador em:
-```bash
-http://localhost:4200
+    cd frontend
+    npm install
+    ng serve
 
+Acesse a aplicação no navegador em: `http://localhost:4200`
+
+---
+Desenvolvido por **Enzo Vinicius Damião da Silva**.
