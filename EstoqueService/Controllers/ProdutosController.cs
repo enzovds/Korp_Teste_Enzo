@@ -18,39 +18,51 @@ namespace EstoqueService.Controllers
 
         // GET: api/produtos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Produto>>> ListarProdutos()
+        public async Task<ActionResult<IEnumerable<Produto>>> GetProdutos()
         {
-            // Uso de LINQ para buscar todos os produtos do banco
             return await _context.Produtos.ToListAsync();
         }
 
         // POST: api/produtos
         [HttpPost]
-        public async Task<ActionResult<Produto>> CadastrarProduto(Produto produto)
+        public async Task<ActionResult<Produto>> CriarProduto(Produto produto)
         {
             _context.Produtos.Add(produto);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(ListarProdutos), new { codigo = produto.Codigo }, produto);
+            return Ok(produto); // Retorna Ok corrigindo o erro do Id
         }
 
         // PUT: api/produtos/{codigo}/dar-baixa
         [HttpPut("{codigo}/dar-baixa")]
         public async Task<IActionResult> DarBaixa(string codigo, [FromBody] int quantidade)
         {
-            // Uso de LINQ para encontrar o produto pelo código
             var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.Codigo == codigo);
-
-            if (produto == null)
+            
+            if (produto == null) 
                 return NotFound(new { mensagem = "Produto não encontrado." });
-
-            if (produto.Saldo < quantidade)
-                return BadRequest(new { mensagem = "Saldo insuficiente em estoque." });
+                
+            if (produto.Saldo < quantidade) 
+                return BadRequest(new { mensagem = "Saldo insuficiente no estoque." });
 
             produto.Saldo -= quantidade;
             await _context.SaveChangesAsync();
+            
+            return Ok(new { mensagem = "Baixa realizada com sucesso." });
+        }
 
-            return Ok(new { mensagem = "Baixa realizada com sucesso!", novoSaldo = produto.Saldo });
+        // DELETE: api/produtos/{codigo}
+        [HttpDelete("{codigo}")]
+        public async Task<IActionResult> DeletarProduto(string codigo)
+        {
+            var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.Codigo == codigo);
+            
+            if (produto == null)
+                return NotFound(new { mensagem = "Produto não encontrado." });
+
+            _context.Produtos.Remove(produto);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { mensagem = "Produto apagado com sucesso!" });
         }
     }
 }

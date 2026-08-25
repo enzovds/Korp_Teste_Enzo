@@ -22,7 +22,6 @@ namespace FaturamentoService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NotaFiscal>>> ListarNotas()
         {
-            // Uso de LINQ para listar todas as notas fiscais
             return await _context.NotasFiscais.ToListAsync();
         }
 
@@ -42,7 +41,6 @@ namespace FaturamentoService.Controllers
         [HttpPut("{id}/fechar")]
         public async Task<IActionResult> FecharNota(int id)
         {
-            // Uso de LINQ para encontrar a nota fiscal pelo ID
             var nota = await _context.NotasFiscais.FirstOrDefaultAsync(n => n.Id == id);
 
             if (nota == null)
@@ -51,7 +49,7 @@ namespace FaturamentoService.Controllers
             if (nota.Status == "Fechada")
                  return BadRequest(new { mensagem = "Esta nota fiscal já está fechada." });
 
-            // Comunicação com o microsserviço de Estoque (dar baixa automática)
+            // Comunicação com o microsserviço de Estoque
             string estoqueUrl = $"http://localhost:5211/api/Produtos/{nota.CodigoProduto}/dar-baixa";
             
             var content = new StringContent(nota.Quantidade.ToString(), System.Text.Encoding.UTF8, "application/json");

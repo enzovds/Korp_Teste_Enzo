@@ -9,6 +9,7 @@ namespace FaturamentoService.Models
         public int NumeroNota { get; set; }
         public string CodigoProduto { get; set; }
         public int Quantidade { get; set; }
+        public string Cliente { get; set; }
         public string Status { get; set; } = "Aberta"; // Aberta ou Fechada
     }
 }
