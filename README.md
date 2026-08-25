@@ -27,8 +27,8 @@ Certifique-se de ter o **.NET SDK** e o **Node.js** instalados na sua máquina.
 
 ### 1. Clonar o Repositório
 
-    git clone <url-do-seu-repositorio>
-    cd <pasta-do-projeto>
+    git clone <https://github.com/enzovds/Korp_Teste_Enzo>
+    cd <Korp_Estoque>
 
 ### 2. Rodar o Microsserviço de Estoque
 Abra um terminal na pasta do serviço de estoque:
